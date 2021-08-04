@@ -42,6 +42,27 @@ for link in links:
     print(i,' done')
     i+=1
     browser.close()
+def speed(t,d):
+    return d*60/t
+for i in range(len(timelist)):
+    if isinstance(timelist[i], str):
+        if ' min' in timelist[i]:
+            timelist[i]=timelist[i].replace(' min','')
+            timelist[i]=float(timelist[i])
+for i in range(len(distancelist)):
+    if isinstance(distancelist[i], str):
+        if ' km' in distancelist[i]:
+            distancelist[i]=distancelist[i].rstrip(' km')
+            distancelist[i]=float(distancelist[i])
+        if isinstance(distancelist[i], str):
+            if ' m' in distancelist[i]:
+                distancelist[i]=distancelist[i].replace(' m','')
+                distancelist[i]=float(distancelist[i])
+                distancelist[i]=distancelist[i]/1000
+        if isinstance(distancelist[i], str):
+            distancelist[i]=float(distancelist[i])
+speedlist=list(map(speed,timelist,distancelist))
+grid['Speed']=speedlist
 # convert to excel
 data=pd.DataFrame(grid)
 data.to_excel("timegriddata.xlsx")
